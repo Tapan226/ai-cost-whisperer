@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -48,6 +47,14 @@ export default {
 					50: '#fef2f2',
 					100: '#fee2e2'
 				},
+				elegant: {
+					DEFAULT: '#e2d5f0',
+					foreground: '#6b46c1',
+					50: '#faf7ff',
+					100: '#f3ebff',
+					200: '#e2d5f0',
+					300: '#c7b0e3'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'
@@ -78,10 +85,10 @@ export default {
 			backgroundImage: {
 				'gradient-primary': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
 				'gradient-secondary': 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-				'gradient-accent': 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+				'gradient-accent': 'linear-gradient(135deg, #fa709a 0%, #e2d5f0 100%)',
 				'gradient-subtle': 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)',
 				'gradient-background': 'linear-gradient(180deg, #fdfbfb 0%, #ebedee 100%)',
-				'gradient-mesh': 'linear-gradient(135deg, #667eea 0%, #f093fb 25%, #fa709a 50%, #fee140 75%, #764ba2 100%)',
+				'gradient-mesh': 'linear-gradient(135deg, #667eea 0%, #f093fb 25%, #fa709a 50%, #e2d5f0 75%, #764ba2 100%)',
 				'gradient-hero': 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(240, 147, 251, 0.1) 25%, rgba(250, 112, 154, 0.1) 75%, rgba(118, 75, 162, 0.1) 100%)'
 			},
 			borderRadius: {

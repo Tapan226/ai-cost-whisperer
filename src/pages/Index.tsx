@@ -16,8 +16,7 @@ import {
   Zap,
   Shield,
   Sparkles,
-  Users,
-  Award
+  Users
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -57,12 +56,6 @@ const Index = () => {
               <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-gray-300 hover:border-primary/50 hover:bg-primary/5">
                 Learn More
               </Button>
-            </div>
-            
-            {/* Demo Badge */}
-            <div className="inline-flex items-center px-6 py-3 card-glass rounded-full text-primary text-sm font-medium">
-              <Award className="mr-2 h-4 w-4" />
-              Hackathon Demo - Showcasing AI Cost Optimization Capabilities
             </div>
           </div>
         </div>
@@ -332,7 +325,7 @@ const Index = () => {
           <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="text-sm text-gray-400 mb-4 md:mb-0">
-                © 2024 AI Cost Advisor. Built for Hackathon 2024.
+                © 2024 AI Cost Advisor. All rights reserved.
               </div>
               <div className="flex items-center space-x-4">
                 <Users className="h-4 w-4 text-gray-400" />
