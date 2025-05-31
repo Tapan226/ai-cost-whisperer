@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Download, Copy, FileText, TrendingUp, DollarSign, Calendar, CheckCircle } from 'lucide-react';
+import { Download, Copy, FileText, TrendingUp, DollarSign, Target, CheckCircle } from 'lucide-react';
 
 interface ReportAreaProps {
   reportData: any;
@@ -9,226 +9,187 @@ interface ReportAreaProps {
 
 export function ReportArea({ reportData }: ReportAreaProps) {
   const handleDownload = (format: 'pdf' | 'docx') => {
-    // TODO: Implement download functionality
-    console.log(`Downloading report as ${format}`);
+    console.log(`Downloading report as ${format.toUpperCase()}`);
+    // TODO: Implement actual download functionality
   };
 
-  const handleCopyToClipboard = () => {
-    // TODO: Implement copy functionality
+  const handleCopy = () => {
     console.log('Copying report to clipboard');
+    // TODO: Implement copy functionality
   };
 
-  if (!reportData) {
-    return (
-      <div className="flex flex-col h-full bg-white">
-        <div className="p-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Report Preview</h3>
-        </div>
-        
-        <div className="flex-1 flex items-center justify-center p-8">
-          <div className="text-center">
-            <FileText className="mx-auto h-16 w-16 text-gray-300 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No Report Generated Yet
-            </h3>
-            <p className="text-gray-500 max-w-sm">
-              Complete your conversation to generate a comprehensive AI cost analysis report
-            </p>
-          </div>
-        </div>
+  const EmptyState = () => (
+    <div className="flex flex-col items-center justify-center h-full p-8 text-center">
+      <div className="w-16 h-16 bg-gradient-subtle rounded-2xl flex items-center justify-center mb-6 shadow-gradient">
+        <FileText className="h-8 w-8 text-white" />
       </div>
-    );
-  }
+      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+        No Report Generated Yet
+      </h3>
+      <p className="text-gray-600 mb-6 max-w-sm">
+        Complete your conversation with the AI advisor to generate a comprehensive cost analysis report.
+      </p>
+      <div className="text-sm text-gray-500">
+        Your report will include:
+      </div>
+      <ul className="text-sm text-gray-600 mt-2 space-y-1">
+        <li className="flex items-center">
+          <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+          Cost breakdown analysis
+        </li>
+        <li className="flex items-center">
+          <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+          ROI projections
+        </li>
+        <li className="flex items-center">
+          <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
+          Optimization recommendations
+        </li>
+      </ul>
+    </div>
+  );
 
-  return (
-    <div className="flex flex-col h-full bg-white">
-      {/* Header */}
-      <div className="p-4 border-b border-gray-200">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold text-gray-900">Cost Analysis Report</h3>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" onClick={handleCopyToClipboard}>
-              <Copy className="mr-2 h-4 w-4" />
-              Copy
-            </Button>
-            <div className="relative">
-              <Button size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Download
-              </Button>
-              {/* TODO: Add dropdown for format selection */}
+  const ReportContent = () => (
+    <div className="space-y-6">
+      {/* Executive Summary */}
+      <Card className="card-glass border-0">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg gradient-text flex items-center">
+            <TrendingUp className="h-5 w-5 mr-2" />
+            Executive Summary
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="text-center p-4 bg-gradient-primary rounded-lg text-white">
+              <div className="text-2xl font-bold">{reportData.totalCost}</div>
+              <div className="text-sm opacity-80">Estimated Monthly Cost</div>
+            </div>
+            <div className="text-center p-4 bg-gradient-accent rounded-lg text-white">
+              <div className="text-2xl font-bold">{reportData.savings}</div>
+              <div className="text-sm opacity-80">Potential Savings</div>
             </div>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
 
-      {/* Report Content */}
-      <div className="flex-1 overflow-auto p-6">
-        <div className="space-y-6">
-          {/* Executive Summary */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <TrendingUp className="mr-2 h-5 w-5 text-primary-500" />
-                Executive Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-gray-700 leading-relaxed">
-                {reportData.executiveSummary}
-              </p>
-            </CardContent>
-          </Card>
-
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 gap-4">
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Annual Cost</p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      ${reportData.totalCost?.toLocaleString()}
-                    </p>
-                  </div>
-                  <DollarSign className="h-8 w-8 text-green-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Monthly Cost</p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      ${reportData.monthlyCost?.toLocaleString()}
-                    </p>
-                  </div>
-                  <Calendar className="h-8 w-8 text-blue-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">ROI</p>
-                    <p className="text-2xl font-bold text-green-600">
-                      {reportData.roi}%
-                    </p>
-                  </div>
-                  <TrendingUp className="h-8 w-8 text-green-500" />
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Payback Period</p>
-                    <p className="text-2xl font-bold text-gray-900">
-                      {reportData.paybackPeriod} months
-                    </p>
-                  </div>
-                  <Calendar className="h-8 w-8 text-purple-500" />
-                </div>
-              </CardContent>
-            </Card>
+      {/* Cost Analysis */}
+      <Card className="card-glass border-0">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg gradient-text flex items-center">
+            <DollarSign className="h-5 w-5 mr-2" />
+            Cost Analysis
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gradient-primary text-white">
+                    <th className="text-left p-3 rounded-l-lg">Service</th>
+                    <th className="text-left p-3">Model</th>
+                    <th className="text-left p-3">Usage</th>
+                    <th className="text-left p-3 rounded-r-lg">Cost</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-700">
+                  <tr className="border-b border-gray-100">
+                    <td className="p-3">Customer Support</td>
+                    <td className="p-3">GPT-4</td>
+                    <td className="p-3">10K tokens/day</td>
+                    <td className="p-3 font-semibold">$1,200/mo</td>
+                  </tr>
+                  <tr className="border-b border-gray-100">
+                    <td className="p-3">Document Processing</td>
+                    <td className="p-3">Claude-3</td>
+                    <td className="p-3">5K tokens/day</td>
+                    <td className="p-3 font-semibold">$800/mo</td>
+                  </tr>
+                  <tr className="bg-gray-50">
+                    <td className="p-3">Analytics</td>
+                    <td className="p-3">GPT-3.5</td>
+                    <td className="p-3">15K tokens/day</td>
+                    <td className="p-3 font-semibold">$450/mo</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
+        </CardContent>
+      </Card>
 
-          {/* Cost Breakdown */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Cost Breakdown</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700">API Calls (GPT-3.5)</span>
-                  <span className="font-semibold">$1,200/month</span>
+      {/* Recommendations */}
+      <Card className="card-glass border-0">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-lg gradient-text flex items-center">
+            <Target className="h-5 w-5 mr-2" />
+            Optimization Recommendations
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            {reportData.recommendations?.map((rec: string, index: number) => (
+              <div key={index} className="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                <div className="w-6 h-6 bg-gradient-primary rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <span className="text-white text-xs font-bold">{index + 1}</span>
                 </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700">API Calls (GPT-4)</span>
-                  <span className="font-semibold">$1,600/month</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700">Infrastructure</span>
-                  <span className="font-semibold">$300/month</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700">Storage & Processing</span>
-                  <span className="font-semibold">$100/month</span>
-                </div>
-                <div className="flex justify-between items-center py-2 font-semibold text-lg border-t border-gray-200 pt-4">
-                  <span>Total Monthly Cost</span>
-                  <span className="text-primary-600">${reportData.monthlyCost?.toLocaleString()}</span>
-                </div>
+                <p className="text-sm text-gray-700">{rec}</p>
               </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 
-          {/* Recommendations */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Key Recommendations</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {reportData.recommendations?.map((rec: string, index: number) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-gray-700">{rec}</span>
-                  </div>
-                ))}
+  return (
+    <div className="flex flex-col h-full bg-gray-50/50">
+      {/* Header */}
+      <div className="p-4 border-b border-gray-200 bg-white/60 backdrop-blur-sm">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold gradient-text">
+            Cost Analysis Report
+          </h2>
+          {reportData && (
+            <div className="flex items-center space-x-2">
+              <div className="relative">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-gray-300 hover:border-primary/50"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download
+                </Button>
+                {/* TODO: Add dropdown menu for format selection */}
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Model Comparison */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Model Comparison</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-2 font-semibold text-gray-900">Model</th>
-                      <th className="text-left py-2 font-semibold text-gray-900">Cost/1K Tokens</th>
-                      <th className="text-left py-2 font-semibold text-gray-900">Monthly Cost</th>
-                      <th className="text-left py-2 font-semibold text-gray-900">Use Case</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    <tr>
-                      <td className="py-2 text-gray-700">GPT-3.5 Turbo</td>
-                      <td className="py-2 text-gray-700">$0.002</td>
-                      <td className="py-2 text-gray-700">$1,200</td>
-                      <td className="py-2 text-gray-700">General queries (80%)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 text-gray-700">GPT-4</td>
-                      <td className="py-2 text-gray-700">$0.03</td>
-                      <td className="py-2 text-gray-700">$1,600</td>
-                      <td className="py-2 text-gray-700">Complex analysis (20%)</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2 text-gray-700">Claude 3</td>
-                      <td className="py-2 text-gray-700">$0.008</td>
-                      <td className="py-2 text-gray-700">$480</td>
-                      <td className="py-2 text-gray-700">Alternative option</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+              <Button
+                size="sm"
+                onClick={handleCopy}
+                className="btn-gradient"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </Button>
+            </div>
+          )}
         </div>
       </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto p-4">
+        {reportData ? <ReportContent /> : <EmptyState />}
+      </div>
+
+      {/* Footer */}
+      {reportData && (
+        <div className="p-4 border-t border-gray-200 bg-white/60 backdrop-blur-sm">
+          <div className="text-xs text-gray-500 text-center">
+            Report generated on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
